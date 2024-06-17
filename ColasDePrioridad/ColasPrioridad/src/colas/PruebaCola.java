@@ -12,9 +12,9 @@ public class PruebaCola {
 
         Cola<Integer> cola = new Cola<>();
         try {
-            cola.encolar(1);
-            cola.encolar(2);
-            cola.encolar(3);
+            Cola.encolar(1);
+            Cola.encolar(2);
+            Cola.encolar(3);
 
             int tam = cola.tamanoCola();
             for (int idx = 1; idx <= tam; idx++) {

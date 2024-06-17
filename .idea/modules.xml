@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ColasDePrioridad/ColasDePrioridad.iml" filepath="$PROJECT_DIR$/ColasDePrioridad/ColasDePrioridad.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ListasEnlazadas/ListasEnlazadas.iml" filepath="$PROJECT_DIR$/ListasEnlazadas/ListasEnlazadas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PilasColas/PilasColas.iml" filepath="$PROJECT_DIR$/PilasColas/PilasColas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/estructura-de-datos.iml" filepath="$PROJECT_DIR$/.idea/estructura-de-datos.iml" />
+    </modules>
+  </component>
+</project>

@@ -9,7 +9,7 @@ package colas;
  */
 public interface InterfazCola<TipoDeDato> {
         
-    void encolar(TipoDeDato dato);
+    void encolar(Cliente nuevoDato);
     
     TipoDeDato desencolar();
     
@@ -18,7 +18,10 @@ public interface InterfazCola<TipoDeDato> {
     void anular();
     
     int tamanoCola();
-        
+
+    boolean contiene(TipoDeDato elemento);
+
     boolean esVacia();
-    
+
+    boolean estaLlena();
 }

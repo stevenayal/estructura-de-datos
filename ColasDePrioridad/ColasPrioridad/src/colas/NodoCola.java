@@ -9,20 +9,20 @@ package colas;
  */
 public class NodoCola<TipoDeDato> {
     
-    TipoDeDato dato;
+    Cliente dato;
     NodoCola<TipoDeDato> siguiente;
 
     /**
      * @return the dato
      */
-    public TipoDeDato getDato() {
+    public Cliente getDato() {
         return dato;
     }
 
     /**
      * @param dato the dato to set
      */
-    public void setDato(TipoDeDato dato) {
+    public void setDato(Cliente dato) {
         this.dato = dato;
     }
 
