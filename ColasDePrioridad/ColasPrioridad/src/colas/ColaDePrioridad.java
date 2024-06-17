@@ -6,6 +6,10 @@ package colas;
  * Para evitar tener una version de esta clase por cada tipo de dato, se utiliza
  * Generics de Java para generalizar y parametrizar el tipo de dato a almacenar.
  *
+ *   Explicacion: Esta clase implementa una cola de prioridad que permite encolar
+ *   y desencolar elementos según su prioridad, utilizando tres colas internas: prioridadAltas,
+ *   prioridadMedia y prioridadBaja.
+ *
  * @param <TipoDeDato> Tipo de Dato a almacenar dentro de la cola
  * @author Prof. Derlis Zarate (profderliszarate@gmail.com)
  * @author Prof. Saúl Zalimben (szalimben93@gmail.com)
@@ -16,18 +20,30 @@ public class ColaDePrioridad<TipoDeDato> {
 	private Cola<TipoDeDato> prioridadMedia = new Cola<>();
 	private Cola<TipoDeDato> prioridadBaja = new Cola<>();
 
-	public void encolar(TipoDeDato nuevoDato, String prioridad) {
 
-		if (prioridad.equalsIgnoreCase("ALTA")) {
-			prioridadAltas.encolar(nuevoDato);
-		} else if (prioridad.equalsIgnoreCase("MEDIA")) {
-			prioridadMedia.encolar(nuevoDato);
+	public void encolar(TipoDeDato nuevoDato, String s) {
+		// Determinar la prioridad del Cliente y encolarlo en la cola correspondiente
+		if (nuevoDato instanceof Cliente) {
+			Cliente cliente = (Cliente) nuevoDato;
+			encolar(cliente);
 		} else {
-			prioridadBaja.encolar(nuevoDato);
+			throw new IllegalArgumentException("El dato encolado debe ser de tipo Cliente");
 		}
-
 	}
 
+	public void encolar(Cliente cliente) {
+		if (cliente.getPrioridad() == 1) {
+			prioridadAltas.encolar(cliente);
+		} else if (cliente.getPrioridad() == 2) {
+			prioridadMedia.encolar(cliente);
+		} else {
+			prioridadBaja.encolar(cliente);
+		}
+	}
+/*
+El metodo desencolar() devuelve el siguiente elemento en la cola,
+priorizando los elementos de mayor prioridad.
+ */
 	public TipoDeDato desencolar() {
 		TipoDeDato ret = null;
 
@@ -62,4 +78,35 @@ public class ColaDePrioridad<TipoDeDato> {
 		return out;
 	}
 
+	public boolean estaVacia() {
+		return prioridadAltas.esVacia() && prioridadMedia.esVacia() && prioridadBaja.esVacia();
+	}
+	public NodoCola<TipoDeDato> getInicioCola() {
+		if (!prioridadAltas.esVacia()) {
+			return prioridadAltas.getInicioCola();
+		} else if (prioridadMedia.esVacia()) {
+            if (!prioridadBaja.esVacia()) {
+                return prioridadBaja.getInicioCola();
+            } else {
+                return null; // Devuelve null si las colas están vacías
+            }
+        } else {
+            return prioridadMedia.getInicioCola();
+        }
+    }
+	public NodoCola<Cliente> getInicioColaClientes() {
+		NodoCola<TipoDeDato> inicio = getInicioCola();
+		if (inicio != null) {
+			return (NodoCola<Cliente>) inicio;
+		} else {
+			return null;
+		}
+	}
+
+	public boolean esVacia() {
+		// Implementación específica de la clase ColaDePrioridad
+		// Debería verificar si todas las colas de prioridad están vacías
+		return prioridadAltas.esVacia() && prioridadMedia.esVacia() && prioridadBaja.esVacia();
+	}
 }
+

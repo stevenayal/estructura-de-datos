@@ -17,6 +17,7 @@ public class Cola<TipoDeDato> implements InterfazCola<TipoDeDato> {
     private NodoCola<TipoDeDato> iniCola;
     private NodoCola<TipoDeDato> finCola;
     private int tamanoCola;
+    private int maxTamanoCola;
 
     /**
      * Constructor de la clase, se inicializa la cola
@@ -25,30 +26,45 @@ public class Cola<TipoDeDato> implements InterfazCola<TipoDeDato> {
         tamanoCola = 0;
         iniCola = null;
         finCola = null;
+        this.maxTamanoCola = Integer.MAX_VALUE; // Valor por defecto
+    }
+
+    public Cola(int maxTamanoCola) {
+        tamanoCola = 0;
+        iniCola = null;
+        finCola = null;
+        this.maxTamanoCola = maxTamanoCola;
+    }
+
+    public static void encolar(int i) {
     }
 
     @Override
-    public void encolar(TipoDeDato nuevoDato) {
-        NodoCola<TipoDeDato> nuevoNodo = new NodoCola<>();
-        nuevoNodo.dato = nuevoDato;
-        nuevoNodo.siguiente = null;
+    public void encolar(Cliente nuevoDato) {
+        if (tamanoCola < maxTamanoCola) {
+            NodoCola<TipoDeDato> nuevoNodo = new NodoCola<>();
+            nuevoNodo.dato = nuevoDato;
+            nuevoNodo.siguiente = null;
 
-        if (esVacia()) {
-            iniCola = nuevoNodo;
-            finCola = nuevoNodo;
+            if (esVacia()) {
+                iniCola = nuevoNodo;
+                finCola = nuevoNodo;
+            } else {
+                finCola.siguiente = nuevoNodo;
+                finCola = nuevoNodo;
+            }
+
+            tamanoCola = tamanoCola + 1;
         } else {
-            finCola.siguiente = nuevoNodo;
-            finCola = nuevoNodo;
+            throw new IllegalStateException("La cola está llena, no se pueden agregar más elementos.");
         }
-
-        tamanoCola = tamanoCola + 1;
     }
 
     @Override
     public TipoDeDato desencolar() {
         TipoDeDato ret = null;
         if (!esVacia()) {
-            ret = iniCola.dato;
+            ret = (TipoDeDato) iniCola.dato;
             iniCola = iniCola.siguiente;
             tamanoCola = tamanoCola - 1;
         }
@@ -59,7 +75,7 @@ public class Cola<TipoDeDato> implements InterfazCola<TipoDeDato> {
     public TipoDeDato obtenerFrente() {
         TipoDeDato ret = null;
         if (!esVacia()) {
-            ret = iniCola.dato;
+            ret = (TipoDeDato) iniCola.dato;
         }
         return ret;
     }
@@ -77,7 +93,38 @@ public class Cola<TipoDeDato> implements InterfazCola<TipoDeDato> {
     }
 
     @Override
+    public boolean contiene(TipoDeDato elemento) {
+        boolean encontrado = false;
+        NodoCola<TipoDeDato> actual = iniCola;
+        while (actual != null) {
+            if (actual.dato.equals(elemento)) {
+                encontrado = true;
+                break;
+            }
+            actual = actual.siguiente;
+        }
+        return encontrado;
+    }
+
+    @Override
     public boolean esVacia() {
-        return tamanoCola == 0;
+        return iniCola == null;
+    }
+
+    @Override
+    public boolean estaLlena() {
+        return false;
+    }
+
+    /**
+     * Método que devuelve el nodo del inicio de la Cola.
+     *
+     * @return Nodo del inicio de la Cola.
+     */
+    public NodoCola<TipoDeDato> getInicioCola() {
+        return iniCola;
+    }
+
+    public void iFrente() {
     }
 }
